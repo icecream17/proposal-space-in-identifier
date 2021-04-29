@@ -1,4 +1,26 @@
-# template-for-proposals
+# Space in identifier
+
+Aw, I did this huge readme edit but it got lost.
+
+__TODO__
+
+```js
+// examples
+Math.SQRT1_2
+```
+
+<!--
+
+
+function arrayDotReduceArrayDotReduceArray (array) {
+   return array.reduce(Array).reduce(Array)
+}
+
+function \array Dot Reduce Array Dot Reduce Array\ (array) {
+   return array.reduce(Array).reduceArray)
+}
+const \This variable will be an array that contains map entries where each map entry is an array containing two more map entries\ = (new Map([new Map(), new Map()])).entries()
+-->
 
 A repository template for ECMAScript proposals.
 
