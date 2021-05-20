@@ -1,82 +1,104 @@
-# Space in identifier
+# Space in Identifier
 
-Aw, I did this huge readme edit but it got lost.
+## Status
 
-__TODO__
+This is a [stage 0](https://tc39.es/process-document/) proposal
+
+## Motivation
+
+There are currently many different ways to style multiple word identifiers:
 
 ```js
-// examples
-Math.SQRT1_2
+let flatcasename
+let UPPERCASENAME
+let PascalCase
+let camelCase
+let snake_case
+let snake_Camel_Case
+let Snake_Pascal_Case
 ```
 
-<!--
+Too many
 
+What's also _too many_ is the _milliseconds_ taken pressing the shift key:
 
-function arrayDotReduceArrayDotReduceArray (array) {
-   return array.reduce(Array).reduce(Array)
+<!--  \lol (not \s) -->
+```js
+tryTypingThis(ughShiftWhy)
+
+now type this(much easier)
+```
+
+But why not use the actual syntax, _spaces_, used by people everywhere on the internet:
+
+```js
+let ters and spaces
+```
+
+```js
+let tersAndSpaces
+```
+## Solution
+
+Now, as you may know,
+
+> Most programming languages do not allow whitespace in identifiers
+_- [Wikipedia](https://en.wikipedia.org/wiki/Naming_convention_(programming)#Multiple-word_identifiers)_
+
+And, isn't this a massive grammar issue?
+It isn't! Previously this was a SyntaxError (unexpected identifier), so actually there's no conflicts!
+
+```js
+let singleword // "singleword"
+let double word // "double word" - No conflicts since previously this was a syntax error
+let object.spaced property // "spaced property" - Same thing
+let object. spaced property // SyntaxError (Identifier literals won't start or end in whitespace)
+
+And i wanna know more about let tuce // Unexpected "let" (cannot contain reserved words)
+
+// Newlines aren't part of this proposal, only spaces
+singleword + double // Imaginary semicolon
+word
+
+// Identifiers still won't start or end in whitespace
+let   whitespaceeeee                   // = "whitespaceeeee"
+
+whitespaceeeee singleword // Still Error. But previously this was a syntax error.
+// Now it's a ReferenceError. "Identifier containing whitespace (%s) is not defined"
+
+// labels can also have spaces
+some label: for async (const char of "a string") {
+    break some label;
 }
 
-function \array Dot Reduce Array Dot Reduce Array\ (array) {
-   return array.reduce(Array).reduceArray)
+function names are also identifiers(and so are parameters) {}
+class Another example with spaces {}
+
+let some object = {
+   some property: 32
 }
-const \This variable will be an array that contains map entries where each map entry is an array containing two more map entries\ = (new Map([new Map(), new Map()])).entries()
--->
 
-A repository template for ECMAScript proposals.
+do {
+   let true true // Unexpected "true"
+} while (false)
 
-## Before creating a proposal
+// This syntax can make code not look like code
+let the abc trails begin
 
-Please ensure the following:
-  1. You have read the [process document](https://tc39.github.io/process-document/)
-  1. You have reviewed the [existing proposals](https://github.com/tc39/proposals/)
-  1. You are aware that your proposal requires being a member of TC39, or locating a TC39 delegate to "champion" your proposal
+```
 
-## Create your proposal repo
+## Grammar changes
 
-Follow these steps:
-  1.  Click the green ["use this template"](https://github.com/tc39/template-for-proposals/generate) button in the repo header. (Note: Do not fork this repo in GitHub's web interface, as that will later prevent transfer into the TC39 organization)
-  1.  Go to your repo settings “Options” page, under “GitHub Pages”, and set the source to the **main branch** under the root (and click Save, if it does not autosave this setting)
-      1. check "Enforce HTTPS"
-      1. On "Options", under "Features", Ensure "Issues" is checked, and disable "Wiki", and "Projects" (unless you intend to use Projects)
-      1. Under "Merge button", check "automatically delete head branches"
-<!--
-  1.  Avoid merge conflicts with build process output files by running:
-      ```sh
-      git config --local --add merge.output.driver true
-      git config --local --add merge.output.driver true
-      ```
-  1.  Add a post-rewrite git hook to auto-rebuild the output on every commit:
-      ```sh
-      cp hooks/post-rewrite .git/hooks/post-rewrite
-      chmod +x .git/hooks/post-rewrite
-      ```
--->
-  3.  ["How to write a good explainer"][explainer] explains how to make a good first impression.
+```js suggestion
+Identifier ::
+    IdentifierName[+Strict]
 
-      > Each TC39 proposal should have a `README.md` file which explains the purpose
-      > of the proposal and its shape at a high level.
-      >
-      > ...
-      >
-      > The rest of this page can be used as a template ...
+IdentifierName[Strict] ::
+    [~Strict] IdentifierWord
+    [+Strict] IdentifierWord but not ReservedWord
+    [~Strict] IdentifierWord ` ` Identifier[?Strict]
+    [+Strict] IdentifierWord but not ReservedWord ` ` Identifier[?Strict]
 
-      Your explainer can point readers to the `index.html` generated from `spec.emu`
-      via markdown like
-
-      ```markdown
-      You can browse the [ecmarkup output](https://ACCOUNT.github.io/PROJECT/)
-      or browse the [source](https://github.com/ACCOUNT/PROJECT/blob/HEAD/spec.emu).
-      ```
-
-      where *ACCOUNT* and *PROJECT* are the first two path elements in your project's Github URL.
-      For example, for github.com/**tc39**/**template-for-proposals**, *ACCOUNT* is "tc39"
-      and *PROJECT* is "template-for-proposals".
-
-
-## Maintain your proposal repo
-
-  1. Make your changes to `spec.emu` (ecmarkup uses HTML syntax, but is not HTML, so I strongly suggest not naming it ".html")
-  1. Any commit that makes meaningful changes to the spec, should run `npm run build` and commit the resulting output.
-  1. Whenever you update `ecmarkup`, run `npm run build` and commit any changes that come from that dependency.
-
-  [explainer]: https://github.com/tc39/how-we-work/blob/HEAD/explainer.md
+(IdentifierWord is just the old IdentifierName)
+    
+```
