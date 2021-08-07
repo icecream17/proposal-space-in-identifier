@@ -1,4 +1,4 @@
-# Space in Identifier
+# Space in Identifiers
 
 ## Status
 
@@ -18,40 +18,49 @@ let snake_Camel_Case
 let Snake_Pascal_Case
 ```
 
-Too many
-
-What's also _too many_ is the _milliseconds_ taken pressing the shift key:
-
-<!--  \lol (not \s) -->
-```js
-tryTypingThis(ughShiftWhy)
-
-now type this(much easier)
-```
-
-But why not use the actual syntax, _spaces_, used by people everywhere on the internet:
+But none of them compare to the _actual syntax_, __spaces__, used by people everywhere on the internet:
 
 ```js
-let ters and spaces
+let there be spaces // !!!!!!!!
 ```
 
+## Benefits
+
+<kbd>Space</kbd> is easier to press than <kbd>Shift</kbd>
 ```js
-let tersAndSpaces
-```
-## Solution
+// Exaggerated examples
 
-Now, as you may know,
+tTtTtTtTt // Hard to type
+tYtYtYtYt // Hard to type
+ttTttTttT // Still harder than space
+t t t t t // Easy to type
+
+// You know it's easier
+node_modules
+node modules
+
+// Random line of code
+
+```
+
+## No way, that's impossible...!
 
 > Most programming languages do not allow whitespace in identifiers
 _- [Wikipedia](https://en.wikipedia.org/wiki/Naming_convention_(programming)#Multiple-word_identifiers)_
 
-And, isn't this a massive grammar issue?
-It isn't! Previously this was a SyntaxError (unexpected identifier), so actually there's no conflicts!
+This seems a massive (programming language) grammar issue... but it's not!
+Previously, identifiers with spaces cause a SyntaxError (unexpected identifier)
+Just like how previously, BigInt numbers (`1389n`) and numeric separators (`1_000_000_003`) were SyntaxErrors.
 
+So no code would ever have multispace variables! That's why this works!
+
+Here's a bunch of examples
 ```js
+"use strict";
+
 let singleword // "singleword"
 let double word // "double word" - No conflicts since previously this was a syntax error
-let object.spaced property // "spaced property" - Same thing
+let object.spaced property // "spaced property" - Properties also use "Identifier" (See grammar changes below)
 let object. spaced property // SyntaxError (Identifier literals won't start or end in whitespace)
 
 And i wanna know more about let tuce // Unexpected "let" (cannot contain reserved words)
@@ -63,16 +72,16 @@ word
 // Identifiers still won't start or end in whitespace
 let   whitespaceeeee                   // = "whitespaceeeee"
 
-whitespaceeeee singleword // Still Error. But previously this was a syntax error.
-// Now it's a ReferenceError. "Identifier containing whitespace (%s) is not defined"
+whitespaceeeee two // Previously this was a SyntaxError.
+// Now it's a ReferenceError. 'Identifier "whitespaceeeee two" (which contains a space) is not defined'
 
 // labels can also have spaces
-some label: for async (const char of "a string") {
+some label: for (const char of "a string") {
     break some label;
 }
 
-function names are also identifiers(and so are parameters) {}
-class Another example with spaces {}
+function names also use Identifier(and so do parameters) {}
+class Another example identifier {}
 
 let some object = {
    some property: 32
@@ -82,7 +91,7 @@ do {
    let true true // Unexpected "true"
 } while (false)
 
-// This syntax can make code not look like code
+// This syntax can make ...interesting code
 let the abc trails begin
 
 ```
